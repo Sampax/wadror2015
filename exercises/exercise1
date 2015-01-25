@@ -1,0 +1,5 @@
+>brew = Brewery.create name:"BrewDog", year:2007
+>brew.beers.create name:"Punk IPA", style:"IPA"
+>brew.beers.create name:"Nanny State", style:"lowalcohol"
+>brew.beers.each { |beer| beer.ratings.create score:1+rand(25) }
+>
