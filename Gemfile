@@ -53,9 +53,20 @@ group :development, :test do
 end
 
 group :development, :test do
-  gem "better_errors"
-
+  gem 'better_errors'
+  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-its'
   #...
 end
 
+group :test do
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'simplecov', require: false
+end
+
 gem 'bcrypt', '~> 3.1.7'
+
+gem 'travis'
+
