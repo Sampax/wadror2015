@@ -59,10 +59,17 @@ class BeersController < ApplicationController
   # DELETE /beers/1
   # DELETE /beers/1.json
   def destroy
-    @beer.destroy
-    respond_to do |format|
-      format.html { redirect_to beers_url, notice: 'Beer was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.admin
+      @beer.destroy
+      respond_to do |format|
+        format.html { redirect_to beers_url, notice: 'Beer was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to :back, alert: 'Only admins can delete beers' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -74,11 +81,11 @@ class BeersController < ApplicationController
 
     def set_breweries_and_styles
       @breweries = Brewery.all
-      @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+      @styles = Style.all
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def beer_params
-      params.require(:beer).permit(:name, :style, :brewery_id)
+      params.require(:beer).permit(:name, :style_id, :brewery_id)
     end
 end
